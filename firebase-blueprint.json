@@ -1,0 +1,66 @@
+{
+  "entities": {
+    "UserProfile": {
+      "title": "UserProfile",
+      "description": "Information about the registered user profile.",
+      "type": "object",
+      "properties": {
+        "userId": { "type": "string", "maxLength": 128 },
+        "displayName": { "type": "string", "maxLength": 100 },
+        "email": { "type": "string", "maxLength": 200 },
+        "photoURL": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["userId", "email"]
+    },
+    "Creation": {
+      "title": "Creation",
+      "description": "User generated media item (video, image, music, transcription, notes).",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "type": { "type": "string", "enum": ["video", "image", "music", "transcription", "chat_export"] },
+        "title": { "type": "string", "maxLength": 200 },
+        "prompt": { "type": "string", "maxLength": 2000 },
+        "mediaUrl": { "type": "string", "maxLength": 500000 },
+        "aspectRatio": { "type": "string", "maxLength": 20 },
+        "model": { "type": "string", "maxLength": 100 },
+        "metadata": { "type": "string", "maxLength": 5000 },
+        "createdAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "type", "title"]
+    },
+    "ChatSession": {
+      "title": "ChatSession",
+      "description": "User chat conversation session with Gemini models.",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string", "maxLength": 128 },
+        "userId": { "type": "string", "maxLength": 128 },
+        "title": { "type": "string", "maxLength": 200 },
+        "model": { "type": "string", "maxLength": 100 },
+        "systemInstruction": { "type": "string", "maxLength": 2000 },
+        "messagesJson": { "type": "string", "maxLength": 500000 },
+        "createdAt": { "type": "string", "format": "date-time" },
+        "updatedAt": { "type": "string", "format": "date-time" }
+      },
+      "required": ["id", "userId", "title"]
+    }
+  },
+  "firestore": {
+    "/users/{userId}": {
+      "schema": "UserProfile",
+      "description": "Stores user profiles restricted to the owner."
+    },
+    "/creations/{creationId}": {
+      "schema": "Creation",
+      "description": "Stores generated creations owned by a user."
+    },
+    "/chats/{chatId}": {
+      "schema": "ChatSession",
+      "description": "Stores multi-turn chat sessions owned by a user."
+    }
+  }
+}

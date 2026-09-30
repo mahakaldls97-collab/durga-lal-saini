@@ -1,0 +1,8 @@
+{
+  "name": "Creative Studio",
+  "description": "Interactive web application studio ready to build custom tools, dashboards, and experiences.",
+  "requestFramePermissions": [],
+  "majorCapabilities": [
+    "MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"
+  ]
+}
